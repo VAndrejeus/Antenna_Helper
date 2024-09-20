@@ -22,13 +22,29 @@ Full WL = 936/Freq
 '''
 
 
-def calculate_yagi():
-    pass
+# Calculate Wavelength
+
+
+def calculate_wavelength(freq):
+    freq = int(freq)
+    full_wl = 936 / freq
+    half_wl = 468 / freq
+    quart_wl = 234 / freq
+    return full_wl  #  , half_wl, quart_wl only calculate full length for testing purposes now
+
+
+def calculate_yagi(freq, label_field):
+    result = calculate_wavelength(freq)
+    label_field(text=f"Full WL = {result}")  # Display only Full Wl for now
+
+
 # ---------------------Moxon formula-------------------
 
 
 def calculate_moxon():
     pass
+
+
 # ---------------------Dipole formula-------------------
 
 
