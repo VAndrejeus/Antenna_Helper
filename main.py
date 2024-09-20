@@ -1,33 +1,7 @@
 # Main program file that creates the windows and all of the elements
 from tkinter import *
 from tkinter import ttk
-
-# ---------------------YAGI formula-------------------
-'''         Lengths: 
-Reflector:       .495 * Wavelength =
-Dipole Radiator: .473 * Wavelength =
-Director 1:      .440 * Wavelength =
-Director 2:      .435 * Wavelength =
-Director 3:      .430 * Wavelength =
-
-            Separation: 
-RE to DR:  .125 * Wavelength =
-DR to D1:  .125 * Wavelength =
-D1 to D2:  .250 * Wavelength =
-D2 to D3:  .250 * Wavelength =
-
-
-            Wavelength calculation:
-Full WL = 936/Freq
-1/2  WL = 468/Freq
-1/4  WL = 234/Freq
-
-
-'''
-# ---------------------Moxon formula-------------------
-
-# ---------------------Dipole formula-------------------
-
+import antenna_calculations as ac
 
 # Define the main window
 window = Tk()
@@ -45,18 +19,24 @@ antenna_tabs.grid(column=0, row=0)
 # Yagi tab
 yagi_tab = ttk.Frame(antenna_tabs)
 antenna_tabs.add(yagi_tab, text="Yagi Antenna")
-freq_field_yagi = ttk.Entry(yagi_tab)# Entry field for the frequency
+freq_field_yagi = ttk.Entry(yagi_tab)  # Entry field for the frequency
 freq_field_yagi.grid(column=0, row=0)
+calc_button_yagi = ttk.Button(yagi_tab, text="Calculate", command=ac.calculate_yagi)  # Create Yagi calculate button
+calc_button_yagi.grid(column=0, row=1)
 # Moxon tab
 moxon_tab = ttk.Frame(antenna_tabs)
 antenna_tabs.add(moxon_tab, text="Moxon Antenna")
-freq_field_moxon = ttk.Entry(moxon_tab)# Entry field for the frequency
+freq_field_moxon = ttk.Entry(moxon_tab)  # Entry field for the frequency
 freq_field_moxon.grid(column=0, row=0)
+calc_button_moxon = ttk.Button(moxon_tab, text="Calculate", command=ac.calculate_moxon)  # Create Moxon calculate button
+calc_button_moxon.grid(column=0, row=1)
 # Dipole tab
 dipole_tab = ttk.Frame(antenna_tabs)
 antenna_tabs.add(dipole_tab, text="Dipole Antenna")
-freq_field_dipole = ttk.Entry(dipole_tab)# Entry field for the frequency
+freq_field_dipole = ttk.Entry(dipole_tab)  # Entry field for the frequency
 freq_field_dipole.grid(column=0, row=0)
+calc_button_dipole = ttk.Button(dipole_tab, text="Calculate", command=ac.calculate_dipole)  #Create Dipole calculate button
+calc_button_dipole.grid(column=0, row=1)
 
 
 window.mainloop()
