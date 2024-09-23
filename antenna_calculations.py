@@ -6,6 +6,7 @@ Director 1:      .440 * Wavelength =
 Director 2:      .435 * Wavelength =
 Director 3:      .430 * Wavelength =
 
+
             Separation:
 RE to DR:  .125 * Wavelength =
 DR to D1:  .125 * Wavelength =
@@ -30,12 +31,22 @@ def calculate_wavelength(freq):
     full_wl = 936 / freq
     half_wl = 468 / freq
     quart_wl = 234 / freq
-    return full_wl  #  , half_wl, quart_wl only calculate full length for testing purposes now
+    return full_wl, half_wl, quart_wl
+
+
+# Calculate Wavelengths
+def calculate_lengths(wavelength):
+    reflector = .495 * wavelength
+    dipole_radiator = .473 * wavelength
+    director1 = .440 * wavelength
+    director2 = .435 * wavelength
+    director3 = .430 * wavelength
+    return reflector, dipole_radiator, director1, director2, director3
 
 
 def calculate_yagi(freq, label_field):
     result = calculate_wavelength(freq)
-    label_field(text=f"Full WL = {result}")  # Display only Full Wl for now
+    label_field(text=f"Full WL = {result[0]}")  # Display only Full Wl for now( 0 index o a tupple
 
 
 # ---------------------Moxon formula-------------------
