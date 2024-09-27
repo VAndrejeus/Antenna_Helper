@@ -33,6 +33,12 @@ calc_button_yagi = ttk.Button(yagi_tab, text="Calculate",
                               command=lambda: ac.calculate_yagi(freq_field_yagi.get(),
                                                                 yagi_wl_label.config))  # Create Yagi calculate button
 calc_button_yagi.grid(column=0, row=1)
+# Yagi Image
+canvas = Canvas(yagi_tab, width=450, height=180)
+yagi_image = PhotoImage(file="Yagi_image.png")
+image = canvas.create_image(225, 90, image=yagi_image)
+canvas.grid(column=0, row=2, columnspan=2)
+
 
 # Moxon tab
 moxon_tab = ttk.Frame(antenna_tabs)

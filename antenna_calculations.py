@@ -1,31 +1,4 @@
-# ---------------------YAGI formula-------------------
-'''         Lengths:
-Reflector:       .495 * Wavelength =
-Dipole Radiator: .473 * Wavelength =
-Director 1:      .440 * Wavelength =
-Director 2:      .435 * Wavelength =
-Director 3:      .430 * Wavelength =
-
-
-            Separation:
-RE to DR:  .125 * Wavelength =
-DR to D1:  .125 * Wavelength =
-D1 to D2:  .250 * Wavelength =
-D2 to D3:  .250 * Wavelength =
-
-
-            Wavelength calculation:
-Full WL = 936/Freq
-1/2  WL = 468/Freq
-1/4  WL = 234/Freq
-
-
-'''
-
-
 # Calculate Wavelength
-
-
 def calculate_wavelength(freq):
     freq = int(freq)
     full_wl = 936 / freq
@@ -44,6 +17,16 @@ def calculate_lengths(wavelength):
     return reflector, dipole_radiator, director1, director2, director3
 
 
+# Calculate Separation between elements
+def calculate_separation(wavelength):
+    re_dr = .125 * wavelength
+    dr_d1 = .125 * wavelength
+    d1_d2 = .250 * wavelength
+    d2_d3 = .250 * wavelength
+    return re_dr, dr_d1, d1_d2, d2_d3
+
+
+# Main calculate Yagi function
 def calculate_yagi(freq, label_field):
     result = calculate_wavelength(freq)
     label_field(text=f"Full WL = {result[0]}")  # Display only Full Wl for now( 0 index o a tupple
