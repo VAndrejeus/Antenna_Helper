@@ -26,7 +26,7 @@ antenna_tabs.grid(column=0, row=0)
 yagi_tab = ttk.Frame(antenna_tabs)
 antenna_tabs.add(yagi_tab, text="Yagi Antenna")
 
-freq_field_yagi = ttk.Entry(yagi_tab, )  # Entry field for the frequency
+freq_field_yagi = ttk.Entry(yagi_tab)  # Entry field for the frequency
 freq_field_yagi.grid(column=0, row=0)
 
 
@@ -36,7 +36,7 @@ yagi_wl_label.grid(column=1, row=0)
 calc_button_yagi = ttk.Button(yagi_tab, text="Calculate",
                               command=lambda: ac.calculate_yagi(freq_field_yagi.get(),
                                                                 yagi_wl_label.config,
-                                                                canvas,
+                                                                canvas_yagi,
                                                                 length_reflector,
                                                                 length_driven,
                                                                 length_director1,
@@ -49,32 +49,59 @@ calc_button_yagi = ttk.Button(yagi_tab, text="Calculate",
                                                                 ))
 calc_button_yagi.grid(column=0, row=1)
 # Yagi Image
-canvas = Canvas(yagi_tab, width=450, height=180)
+canvas_yagi = Canvas(yagi_tab, width=450, height=180)
 yagi_image = PhotoImage(file="Yagi_image.png")
-image = canvas.create_image(225, 90, image=yagi_image)
-# Element lengths
-length_reflector = canvas.create_text(420,100, text="0", fill="green", font=MEASUREMENT_FONT)
-length_driven = canvas.create_text(330, 20, text="0", fill="green", font=MEASUREMENT_FONT)
-length_director1 = canvas.create_text(245, 20, text="0", fill="green", font=MEASUREMENT_FONT)
-length_director2 = canvas.create_text(165, 20, text="0", fill="green", font=MEASUREMENT_FONT)
-length_director3 = canvas.create_text(80, 20, text="0", fill="green", font=MEASUREMENT_FONT)
+image_yagi = canvas_yagi.create_image(225, 90, image=yagi_image)
+# Yagi element lengths
+length_reflector = canvas_yagi.create_text(420,100, text="0", fill="green", font=MEASUREMENT_FONT)
+length_driven = canvas_yagi.create_text(330, 20, text="0", fill="green", font=MEASUREMENT_FONT)
+length_director1 = canvas_yagi.create_text(250, 20, text="0", fill="green", font=MEASUREMENT_FONT)
+length_director2 = canvas_yagi.create_text(165, 20, text="0", fill="green", font=MEASUREMENT_FONT)
+length_director3 = canvas_yagi.create_text(85, 20, text="0", fill="green", font=MEASUREMENT_FONT)
 # Distances between elements
-d3_d2_distance = canvas.create_text(120,70, text="0", fill="green", font=MEASUREMENT_FONT)
-d2_d1_distance = canvas.create_text(205,70, text="0", fill="green", font=MEASUREMENT_FONT)
-d1_dr_distance = canvas.create_text(290, 70, text="0", fill="green", font=MEASUREMENT_FONT)
-dr_re_distance = canvas.create_text(355, 70, text="0", fill="green", font=MEASUREMENT_FONT)
-canvas.grid(column=0, row=2, columnspan=2)
+d3_d2_distance = canvas_yagi.create_text(130,70, text="0", fill="green", font=MEASUREMENT_FONT)
+d2_d1_distance = canvas_yagi.create_text(210,70, text="0", fill="green", font=MEASUREMENT_FONT)
+d1_dr_distance = canvas_yagi.create_text(290, 70, text="0", fill="green", font=MEASUREMENT_FONT)
+dr_re_distance = canvas_yagi.create_text(355, 70, text="0", fill="green", font=MEASUREMENT_FONT)
+canvas_yagi.grid(column=0, row=2, columnspan=2)
 
 
 # Moxon tab
 moxon_tab = ttk.Frame(antenna_tabs)
 antenna_tabs.add(moxon_tab, text="Moxon Antenna")
 
+# Entries
 freq_field_moxon = ttk.Entry(moxon_tab)  # Entry field for the frequency
 freq_field_moxon.grid(column=0, row=0)
+wire_diameter_field = ttk.Entry(moxon_tab)
+wire_diameter_field.grid(column=1, row=0)
 
+
+
+# Moxon image
+canvas_moxon = Canvas(moxon_tab, width=440, height=220)
+moxon_image = PhotoImage(file="Moxon_image.png")
+image_moxon = canvas_moxon.create_image(200, 110, image=moxon_image)
+canvas_moxon.grid(column=0, row=2, columnspan=3)
+
+# Moxon element lengths
+a_element = canvas_moxon.create_text(60, 60, text="A:", fill="green", font=MEASUREMENT_FONT)
+b_element = canvas_moxon.create_text(60, 80, text="B:", fill="green", font=MEASUREMENT_FONT)
+c_element = canvas_moxon.create_text(60, 100, text="C:", fill="green", font=MEASUREMENT_FONT)
+d_element = canvas_moxon.create_text(60, 120, text="D:", fill="green", font=MEASUREMENT_FONT)
+e_element = canvas_moxon.create_text(60, 140, text="E:", fill="green", font=MEASUREMENT_FONT)
+
+# Buttons
 calc_button_moxon = ttk.Button(moxon_tab, text="Calculate",
-                               command=ac.calculate_moxon())  # Create Moxon calculate button
+                               command=lambda: ac.calculate_moxon(freq_field_moxon.get(),
+                                                                  wire_diameter_field.get(),
+                                                                  canvas_moxon,
+                                                                  a_element,
+                                                                  b_element,
+                                                                  c_element,
+                                                                  d_element,
+                                                                  e_element
+                                                                  ))  # Create Moxon calculate button
 calc_button_moxon.grid(column=0, row=1)
 
 # Dipole tab

@@ -1,10 +1,18 @@
+import math
+
+
 # Calculate Wavelength
 def calculate_wavelength(freq):
     freq = int(freq)
-    full_wl = 936 / freq
-    half_wl = 468 / freq
-    quart_wl = 234 / freq
-    return full_wl, half_wl, quart_wl
+    # feet per second
+    full_wl = 983 / freq
+    half_wl = 491 / freq
+    quart_wl = 245 / freq
+
+    # inches per second
+    full_wl_in = 11802.71 / freq
+
+    return full_wl, half_wl, quart_wl, full_wl_in
 
 
 # Calculate Wavelengths
@@ -27,34 +35,59 @@ def calculate_separation(wavelength):
 
 
 # Main calculate Yagi function
-def calculate_yagi(freq, wl_label_field, canvas, l_re, l_dr, l_d1, l_d2, l_d3, d_dr_re, d_d1_dr, d_d1_d2, d_d2_d3):
+def calculate_yagi(freq, wl_label_field, canvas_yagi, l_re, l_dr, l_d1, l_d2, l_d3, d_dr_re, d_d1_dr, d_d1_d2, d_d2_d3):
     wave_length = calculate_wavelength(freq)[0]
     wl_label_field(text=f"Full WL = {wave_length}")  # Display only Full Wl for now( 0 index o a tupple
 
     #Lengths of elements
     lengths = calculate_lengths(wave_length)
-    canvas.itemconfig(l_re, text=f"{lengths[0]:.3f} ft")
-    canvas.itemconfig(l_dr, text=f"{lengths[1]:.3f} ft")
-    canvas.itemconfig(l_d1, text=f"{lengths[2]:.3f} ft")
-    canvas.itemconfig(l_d2, text=f"{lengths[3]:.3f} ft")
-    canvas.itemconfig(l_d3, text=f"{lengths[4]:.3f} ft")
+    canvas_yagi.itemconfig(l_re, text=f"{lengths[0]:.3f} ft")
+    canvas_yagi.itemconfig(l_dr, text=f"{lengths[1]:.3f} ft")
+    canvas_yagi.itemconfig(l_d1, text=f"{lengths[2]:.3f} ft")
+    canvas_yagi.itemconfig(l_d2, text=f"{lengths[3]:.3f} ft")
+    canvas_yagi.itemconfig(l_d3, text=f"{lengths[4]:.3f} ft")
 
     #Distance between elements
     distances = calculate_separation(wave_length)
-    canvas.itemconfig(d_dr_re, text=f"{distances[0]:.3f} ft")
-    canvas.itemconfig(d_d1_dr, text=f"{distances[1]:.3f} ft")
-    canvas.itemconfig(d_d1_d2, text=f"{distances[2]:.3f} ft")
-    canvas.itemconfig(d_d2_d3, text=f"{distances[3]:.3f} ft")
-
-
+    canvas_yagi.itemconfig(d_dr_re, text=f"{distances[0]:.3f} ft")
+    canvas_yagi.itemconfig(d_d1_dr, text=f"{distances[1]:.3f} ft")
+    canvas_yagi.itemconfig(d_d1_d2, text=f"{distances[2]:.3f} ft")
+    canvas_yagi.itemconfig(d_d2_d3, text=f"{distances[3]:.3f} ft")
 
 
 # ---------------------Moxon formula-------------------
+def calculate_moxon(freq, diam, canvas_moxon, l_a, l_b, l_c, l_d, l_e):
+    wave_length = calculate_wavelength(freq)[3] # inches
+    diam = int(diam)
 
+    # Calculate wave_length from given diameter
+    diameter_wavelength = diam / wave_length
+    # d1 = encapsulation of the effect of the wire diameter on the antenna dimensions
+    d1 = 0.4342945 / math.log(diameter_wavelength)
 
-def calculate_moxon():
-    pass
+    # Calculating dimensions and converting values for display
+    a = ((-0.0008571428571 * d1 * d1) + (-0.009571428571 * d1) + 0.3398571429) * wave_length
+    b = ((-0.002142857143 * d1 * d1) + (-0.02035714286 * d1) + 0.008285714286) * wave_length
+    c = ((0.001809523381 * d1 * d1) + (0.01780952381 * d1) + 0.05164285714) * wave_length
+    d = ((0.001 * d1) + 0.07178571429) * wave_length
+    e = b + c + d
 
+    # Converting dimension to display in feet and inches
+    length_a = a//12
+    length_a_in = a % 12
+    length_b = b//12
+    length_b_in = b % 12
+    length_c = c//12
+    length_c_in = c % 12
+    length_d = d//12
+    length_d_in = d % 12
+    length_e = e//12
+    length_e_in = e % 12
+    canvas_moxon.itemconfig(l_a, text=f"A:{length_a:.0f} ft {length_a_in:.1f} in")
+    canvas_moxon.itemconfig(l_b, text=f"B:{length_b:.0f} ft {length_b_in:.1f} in")
+    canvas_moxon.itemconfig(l_c, text=f"C:{length_c:.0f} ft {length_c_in:.1f} in")
+    canvas_moxon.itemconfig(l_d, text=f"D:{length_d:.0f} ft {length_b_in:.1f} in")
+    canvas_moxon.itemconfig(l_e, text=f"E:{length_e:.0f} ft {length_e_in:.1f} in")
 
 # ---------------------Dipole formula-------------------
 
