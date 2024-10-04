@@ -92,5 +92,9 @@ def calculate_moxon(freq, diam, canvas_moxon, l_a, l_b, l_c, l_d, l_e):
 # ---------------------Dipole formula-------------------
 
 
-def calculate_dipole():
-    pass
+def calculate_dipole(freq, canvas_dipole, l_l, l_e):
+    element_l = calculate_wavelength(freq)[1]
+    element_e = element_l/2
+
+    canvas_dipole.itemconfig(l_l, text=f"{element_l:.2f} ft ")
+    canvas_dipole.itemconfig(l_e, text=f"{element_e:.2f} ft ")

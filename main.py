@@ -111,8 +111,21 @@ antenna_tabs.add(dipole_tab, text="Dipole Antenna")
 freq_field_dipole = ttk.Entry(dipole_tab)  # Entry field for the frequency
 freq_field_dipole.grid(column=0, row=0)
 
+#Dipole image
+canvas_dipole = Canvas(dipole_tab, width=440, height=220)
+dipole_image = PhotoImage(file="Dipole_image.png")
+image_dipole = canvas_dipole.create_image(220, 110, image=dipole_image)
+canvas_dipole.grid(row=2, column=0, columnspan=2)
+
+
+#Dipole elements length
+l_element = canvas_dipole.create_text(215, 10, text="0", fill="green", font=MEASUREMENT_FONT)
+e_element = canvas_dipole.create_text(115, 50, text="0", fill="green", font=MEASUREMENT_FONT)
 calc_button_dipole = ttk.Button(dipole_tab, text="Calculate",
-                                command=ac.calculate_dipole())  #Create Dipole calculate button
+                                command=lambda: ac.calculate_dipole(freq_field_dipole.get(),
+                                                                    canvas_dipole,
+                                                                    l_element,
+                                                                    e_element))  #Create Dipole calculate button
 calc_button_dipole.grid(column=0, row=1)
 
 window.mainloop()
