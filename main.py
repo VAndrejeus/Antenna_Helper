@@ -33,6 +33,15 @@ freq_field_yagi.grid(column=0, row=0)
 yagi_wl_label = ttk.Label(yagi_tab, text="Wavelength", foreground="purple", font=MEASUREMENT_FONT) #Yagi Wavelength label
 yagi_wl_label.grid(column=1, row=0)
 
+# Wavelength radio buttons
+ywave_length_size = IntVar()
+ywave_length_full = ttk.Radiobutton(yagi_tab, text="Full", value=1, variable=ywave_length_size, command="pass")
+ywave_length_half = ttk.Radiobutton(yagi_tab, text="Half", value=2, variable=ywave_length_size, command="pass")
+ywave_length_quarter = ttk.Radiobutton(yagi_tab, text="Quarter", value=3, variable=ywave_length_size, command="pass")
+ywave_length_full.grid(column=2, row=1)
+ywave_length_half.grid(column=2, row=2)
+ywave_length_quarter.grid(column=2, row=3)
+
 calc_button_yagi = ttk.Button(yagi_tab, text="Calculate",
                               command=lambda: ac.calculate_yagi(freq_field_yagi.get(),
                                                                 yagi_wl_label.config,
@@ -120,12 +129,12 @@ canvas_dipole.grid(row=2, column=0, columnspan=2)
 
 #Dipole elements length
 l_element = canvas_dipole.create_text(215, 10, text="0", fill="green", font=MEASUREMENT_FONT)
-e_element = canvas_dipole.create_text(115, 50, text="0", fill="green", font=MEASUREMENT_FONT)
+e_element_dipole = canvas_dipole.create_text(115, 50, text="0", fill="green", font=MEASUREMENT_FONT)
 calc_button_dipole = ttk.Button(dipole_tab, text="Calculate",
                                 command=lambda: ac.calculate_dipole(freq_field_dipole.get(),
                                                                     canvas_dipole,
                                                                     l_element,
-                                                                    e_element))  #Create Dipole calculate button
+                                                                    e_element_dipole))  #Create Dipole calculate button
 calc_button_dipole.grid(column=0, row=1)
 
 window.mainloop()

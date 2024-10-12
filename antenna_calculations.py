@@ -37,22 +37,22 @@ def calculate_separation(wavelength):
 # Main calculate Yagi function
 def calculate_yagi(freq, wl_label_field, canvas_yagi, l_re, l_dr, l_d1, l_d2, l_d3, d_dr_re, d_d1_dr, d_d1_d2, d_d2_d3):
     wave_length = calculate_wavelength(freq)[0]
-    wl_label_field(text=f"Full WL = {wave_length}")  # Display only Full Wl for now( 0 index o a tupple
+    wl_label_field(text=f"Full WL = {wave_length:.2f}")  # Display only Full Wl for now( 0 index o a tupple
 
     #Lengths of elements
     lengths = calculate_lengths(wave_length)
-    canvas_yagi.itemconfig(l_re, text=f"{lengths[0]:.3f} ft")
-    canvas_yagi.itemconfig(l_dr, text=f"{lengths[1]:.3f} ft")
-    canvas_yagi.itemconfig(l_d1, text=f"{lengths[2]:.3f} ft")
-    canvas_yagi.itemconfig(l_d2, text=f"{lengths[3]:.3f} ft")
-    canvas_yagi.itemconfig(l_d3, text=f"{lengths[4]:.3f} ft")
+    canvas_yagi.itemconfig(l_re, text=f"{lengths[0]:.2f} ft")
+    canvas_yagi.itemconfig(l_dr, text=f"{lengths[1]:.2f} ft")
+    canvas_yagi.itemconfig(l_d1, text=f"{lengths[2]:.2f} ft")
+    canvas_yagi.itemconfig(l_d2, text=f"{lengths[3]:.2f} ft")
+    canvas_yagi.itemconfig(l_d3, text=f"{lengths[4]:.2f} ft")
 
     #Distance between elements
     distances = calculate_separation(wave_length)
-    canvas_yagi.itemconfig(d_dr_re, text=f"{distances[0]:.3f} ft")
-    canvas_yagi.itemconfig(d_d1_dr, text=f"{distances[1]:.3f} ft")
-    canvas_yagi.itemconfig(d_d1_d2, text=f"{distances[2]:.3f} ft")
-    canvas_yagi.itemconfig(d_d2_d3, text=f"{distances[3]:.3f} ft")
+    canvas_yagi.itemconfig(d_dr_re, text=f"{distances[0]:.2f} ft")
+    canvas_yagi.itemconfig(d_d1_dr, text=f"{distances[1]:.2f} ft")
+    canvas_yagi.itemconfig(d_d1_d2, text=f"{distances[2]:.2f} ft")
+    canvas_yagi.itemconfig(d_d2_d3, text=f"{distances[3]:.2f} ft")
 
 
 # ---------------------Moxon formula-------------------
@@ -86,7 +86,7 @@ def calculate_moxon(freq, diam, canvas_moxon, l_a, l_b, l_c, l_d, l_e):
     canvas_moxon.itemconfig(l_a, text=f"A:{length_a:.0f} ft {length_a_in:.1f} in")
     canvas_moxon.itemconfig(l_b, text=f"B:{length_b:.0f} ft {length_b_in:.1f} in")
     canvas_moxon.itemconfig(l_c, text=f"C:{length_c:.0f} ft {length_c_in:.1f} in")
-    canvas_moxon.itemconfig(l_d, text=f"D:{length_d:.0f} ft {length_b_in:.1f} in")
+    canvas_moxon.itemconfig(l_d, text=f"D:{length_d:.0f} ft {length_d_in:.1f} in")
     canvas_moxon.itemconfig(l_e, text=f"E:{length_e:.0f} ft {length_e_in:.1f} in")
 
 # ---------------------Dipole formula-------------------
