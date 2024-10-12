@@ -67,8 +67,8 @@ def calculate_moxon(freq, diam, canvas_moxon, l_a, l_b, l_c, l_d, l_e):
 
     # Calculating dimensions and converting values for display
     a = ((-0.0008571428571 * d1 * d1) + (-0.009571428571 * d1) + 0.3398571429) * wave_length
-    b = ((-0.002142857143 * d1 * d1) + (-0.02035714286 * d1) + 0.008285714286) * wave_length
-    c = ((0.001809523381 * d1 * d1) + (0.01780952381 * d1) + 0.05164285714) * wave_length
+    b = ((0.001809523381 * d1 * d1) + (0.01780952381 * d1) + 0.05164285714) * wave_length
+    c = ((-0.002142857143 * d1 * d1) + (-0.02035714286 * d1) + 0.008285714286) * wave_length
     d = ((0.001 * d1) + 0.07178571429) * wave_length
     e = b + c + d
 
