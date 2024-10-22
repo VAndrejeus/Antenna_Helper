@@ -16,6 +16,20 @@ MEASUREMENT_FONT = ("Times New Roman", 12, "bold") # Dimensions font constant va
 # Frame that will hold most of the tabs for different antennas
 tabs_base = Frame(window)
 tabs_base.grid(column=0, row=0)
+# Wavelength frame
+wavelength_radio_buttons_frame = Frame(window)
+wavelength_radio_buttons_frame.grid(row=0, column=1)
+
+# Wavelength radio buttons
+wave_length_size = IntVar()
+wave_length_size.set(1) # Set the default wavelength to Full
+wave_length_full = ttk.Radiobutton(wavelength_radio_buttons_frame, text="Full", value=1, variable=wave_length_size)
+wave_length_half = ttk.Radiobutton(wavelength_radio_buttons_frame, text="Half", value=2, variable=wave_length_size)
+wave_length_quarter = ttk.Radiobutton(wavelength_radio_buttons_frame, text="Quarter", value=3, variable=wave_length_size)
+wave_length_full.grid(column=0, row=0)
+wave_length_half.grid(column=0, row=1)
+wave_length_quarter.grid(column=0, row=2)
+
 
 # Notebook that will have tabs for different antenna types
 antenna_tabs = ttk.Notebook(tabs_base)
@@ -29,21 +43,14 @@ antenna_tabs.add(yagi_tab, text="Yagi Antenna")
 freq_field_yagi = ttk.Entry(yagi_tab)  # Entry field for the frequency
 freq_field_yagi.grid(column=0, row=0)
 
-
-yagi_wl_label = ttk.Label(yagi_tab, text="Wavelength", foreground="purple", font=MEASUREMENT_FONT) #Yagi Wavelength label
+#Yagi Wavelength label
+yagi_wl_label = ttk.Label(yagi_tab, text="Wavelength", foreground="purple", font=MEASUREMENT_FONT)
 yagi_wl_label.grid(column=1, row=0)
 
-# Wavelength radio buttons
-ywave_length_size = IntVar()
-ywave_length_full = ttk.Radiobutton(yagi_tab, text="Full", value=1, variable=ywave_length_size, command="pass")
-ywave_length_half = ttk.Radiobutton(yagi_tab, text="Half", value=2, variable=ywave_length_size, command="pass")
-ywave_length_quarter = ttk.Radiobutton(yagi_tab, text="Quarter", value=3, variable=ywave_length_size, command="pass")
-ywave_length_full.grid(column=2, row=1)
-ywave_length_half.grid(column=2, row=2)
-ywave_length_quarter.grid(column=2, row=3)
 
 calc_button_yagi = ttk.Button(yagi_tab, text="Calculate",
                               command=lambda: ac.calculate_yagi(freq_field_yagi.get(),
+                                                                wave_length_size,
                                                                 yagi_wl_label.config,
                                                                 canvas_yagi,
                                                                 length_reflector,
@@ -82,7 +89,7 @@ antenna_tabs.add(moxon_tab, text="Moxon Antenna")
 # Entries
 freq_field_moxon = ttk.Entry(moxon_tab)  # Entry field for the frequency
 freq_field_moxon.grid(column=0, row=0)
-wire_diameter_field = ttk.Entry(moxon_tab)
+wire_diameter_field = ttk.Entry(moxon_tab) # Entry field for wire diameter
 wire_diameter_field.grid(column=1, row=0)
 
 
@@ -100,24 +107,31 @@ c_element = canvas_moxon.create_text(60, 100, text="C:", fill="green", font=MEAS
 d_element = canvas_moxon.create_text(60, 120, text="D:", fill="green", font=MEASUREMENT_FONT)
 e_element = canvas_moxon.create_text(60, 140, text="E:", fill="green", font=MEASUREMENT_FONT)
 
-# Buttons
+# Moxon Wavelength Label
+moxon_wl_label = ttk.Label(moxon_tab, text="Wavelength", foreground="purple", font=MEASUREMENT_FONT)
+moxon_wl_label.grid(column=2, row=0)
+
+# Create Moxon calculate button
 calc_button_moxon = ttk.Button(moxon_tab, text="Calculate",
                                command=lambda: ac.calculate_moxon(freq_field_moxon.get(),
                                                                   wire_diameter_field.get(),
+                                                                  wave_length_size,
+                                                                  moxon_wl_label.config,
                                                                   canvas_moxon,
                                                                   a_element,
                                                                   b_element,
                                                                   c_element,
                                                                   d_element,
                                                                   e_element
-                                                                  ))  # Create Moxon calculate button
+                                                                  ))
 calc_button_moxon.grid(column=0, row=1)
 
 # Dipole tab
 dipole_tab = ttk.Frame(antenna_tabs)
 antenna_tabs.add(dipole_tab, text="Dipole Antenna")
 
-freq_field_dipole = ttk.Entry(dipole_tab)  # Entry field for the frequency
+# Entry field for the frequency
+freq_field_dipole = ttk.Entry(dipole_tab)
 freq_field_dipole.grid(column=0, row=0)
 
 #Dipole image
@@ -130,11 +144,20 @@ canvas_dipole.grid(row=2, column=0, columnspan=2)
 #Dipole elements length
 l_element = canvas_dipole.create_text(215, 10, text="0", fill="green", font=MEASUREMENT_FONT)
 e_element_dipole = canvas_dipole.create_text(115, 50, text="0", fill="green", font=MEASUREMENT_FONT)
+
+# Dipole Wavelength Label
+dipole_wl_label = ttk.Label(dipole_tab, text="Wavelength", foreground="purple", font=MEASUREMENT_FONT)
+dipole_wl_label.grid(column=1, row=0)
+
+
+#Create Dipole calculate button
 calc_button_dipole = ttk.Button(dipole_tab, text="Calculate",
                                 command=lambda: ac.calculate_dipole(freq_field_dipole.get(),
+                                                                    wave_length_size,
+                                                                    dipole_wl_label.config,
                                                                     canvas_dipole,
                                                                     l_element,
-                                                                    e_element_dipole))  #Create Dipole calculate button
+                                                                    e_element_dipole))
 calc_button_dipole.grid(column=0, row=1)
 
 window.mainloop()

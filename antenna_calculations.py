@@ -11,8 +11,10 @@ def calculate_wavelength(freq):
 
     # inches per second
     full_wl_in = 11802.71 / freq
+    half_wl_in = 5901.42/ freq
+    quart_wl_in = 2950.71 / freq
 
-    return full_wl, half_wl, quart_wl, full_wl_in
+    return full_wl, half_wl, quart_wl, full_wl_in, half_wl_in, quart_wl_in
 
 
 # Calculate Wavelengths
@@ -35,9 +37,18 @@ def calculate_separation(wavelength):
 
 
 # Main calculate Yagi function
-def calculate_yagi(freq, wl_label_field, canvas_yagi, l_re, l_dr, l_d1, l_d2, l_d3, d_dr_re, d_d1_dr, d_d1_d2, d_d2_d3):
-    wave_length = calculate_wavelength(freq)[0]
-    wl_label_field(text=f"Full WL = {wave_length:.2f}")  # Display only Full Wl for now( 0 index o a tupple
+def calculate_yagi(freq, wave_length_size, wl_label_field, canvas_yagi, l_re, l_dr, l_d1, l_d2, l_d3, d_dr_re, d_d1_dr, d_d1_d2, d_d2_d3):
+    radio_button_selected = wave_length_size.get()
+    if radio_button_selected == 1:
+        wave_length = calculate_wavelength(freq)[0]
+        wl_label_field(text=f"Full WL = {wave_length:.2f} ft")
+    elif radio_button_selected == 2:
+        wave_length = calculate_wavelength(freq)[1]
+        wl_label_field(text=f"Half WL = {wave_length:.2f} ft")
+    elif radio_button_selected == 3:
+        wave_length = calculate_wavelength(freq)[2]
+        wl_label_field(text=f"Quarter WL = {wave_length:.2f} ft")
+
 
     #Lengths of elements
     lengths = calculate_lengths(wave_length)
@@ -56,8 +67,18 @@ def calculate_yagi(freq, wl_label_field, canvas_yagi, l_re, l_dr, l_d1, l_d2, l_
 
 
 # ---------------------Moxon formula-------------------
-def calculate_moxon(freq, diam, canvas_moxon, l_a, l_b, l_c, l_d, l_e):
-    wave_length = calculate_wavelength(freq)[3] # inches
+def calculate_moxon(freq, diam, wave_length_size, wl_label_field, canvas_moxon, l_a, l_b, l_c, l_d, l_e):
+    radio_button_selected = wave_length_size.get()
+    if radio_button_selected == 1:
+        wave_length = calculate_wavelength(freq)[3]
+        wl_label_field(text=f"Full WL = {wave_length:.2f} in")
+    elif radio_button_selected == 2:
+        wave_length = calculate_wavelength(freq)[4]
+        wl_label_field(text=f"Half WL = {wave_length:.2f} in")
+    elif radio_button_selected == 3:
+        wave_length = calculate_wavelength(freq)[5]
+        wl_label_field(text=f"Quarter WL = {wave_length:.2f} in")
+
     diam = int(diam)
 
     # Calculate wave_length from given diameter
@@ -92,8 +113,18 @@ def calculate_moxon(freq, diam, canvas_moxon, l_a, l_b, l_c, l_d, l_e):
 # ---------------------Dipole formula-------------------
 
 
-def calculate_dipole(freq, canvas_dipole, l_l, l_e):
-    element_l = calculate_wavelength(freq)[1]
+def calculate_dipole(freq, wave_length_size, wl_label_field, canvas_dipole, l_l, l_e):
+    # Wavelength Radio buttons selection options
+    radio_button_selected = wave_length_size.get()
+    if radio_button_selected == 1:
+        element_l = calculate_wavelength(freq)[0]
+        wl_label_field(text=f"Full WL = {element_l:.2f} ft")
+    elif radio_button_selected == 2:
+        element_l = calculate_wavelength(freq)[1]
+        wl_label_field(text=f"Half WL = {element_l:.2f} ft")
+    elif radio_button_selected == 3:
+        element_l = calculate_wavelength(freq)[2]
+        wl_label_field(text=f"Quarter WL = {element_l:.2f} ft")
     element_e = element_l/2
 
     canvas_dipole.itemconfig(l_l, text=f"{element_l:.2f} ft ")
